@@ -5,7 +5,6 @@ import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com
 import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js";
 
 function Login() {
-    // Your web app's Firebase configuration
     const firebaseConfig = {
         apiKey: "AIzaSyDIIMXKdc0TSdBqSf1PlDsMAHC97Nbhxmw",
         authDomain: "f-money-8a633.firebaseapp.com",
@@ -16,7 +15,6 @@ function Login() {
         measurementId: "G-91BPGENQZG"
     };
 
-    // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
@@ -31,44 +29,61 @@ function Login() {
             const name = document.getElementById("name").value;
 
             try {
-                // Create user
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
 
-                // Store additional information in Firestore
                 await setDoc(doc(db, "users", userCredential.user.uid), {
                     email: email,
                     name: name
                 });
 
                 console.log("회원가입 성공", userCredential.user);
+                document.getElementById('succes').innerText = '회원가입 성공!'
+                document.getElementById('error').innerText = "";
+                const inputs = document.getElementsByClassName('sginInput');
+                for (let i = 0; i < inputs.length; i++) {
+                    inputs[i].style.border = 'none'; // 원하는 스타일 속성 설정
+                }
+                setTimeout(() => {
+                    window.location.href = './Sign'
+                }, 2000);
+
             } catch (error) {
                 console.error("회원가입 실패", error.message);
+                if (error.message === "Firebase: Error (auth/email-already-in-use).") {
+                    document.getElementById('error').innerText = "이미 사용중인 아이디 입니다.";
+                    const inputs = document.getElementsByClassName('sginInput');
+                    for (let i = 0; i < inputs.length; i++) {
+                        inputs[i].style.border = '1px solid red'; // 원하는 스타일 속성 설정
+                    }
+
+                } else {
+                    document.getElementById('error').innerText = "안타깝습니다. 회원가입이 안됩니다.";
+                }
+
             }
         };
 
         signupForm.addEventListener("submit", handleSubmit);
 
-        // Cleanup function to remove the event listener
         return () => {
             signupForm.removeEventListener("submit", handleSubmit);
         };
     }, [auth, db]);
 
     return (
-        <div>
+        <div className="container">
             <h1 className='signHeader'>F-Money manager</h1>
-            <h3 className='signTag'>Sign in</h3>
             <form id='signup-form'>
-                <label htmlFor="email">아이디</label>
-                <input type="email" placeholder='아이디' id='email'/><br />
-
+                <h1>sign up</h1>
+                <label htmlFor="email">이메일</label>
+                <input type="email" placeholder='아이디' id='email' className='sginInput'/>
                 <label htmlFor="password">비밀번호</label>
-                <input type="password" placeholder='비밀번호' id='password' style={{color: 'black'}}/> <br />
-
+                <input type="password" placeholder='비밀번호' id='password' className='sginInput'/>
                 <label htmlFor="name">이름</label>
-                <input type="text" placeholder='이름' id='name'/> <br />
-
+                <input type="text" placeholder='이름' id='name' className='sginInput'/>
                 <button type="submit" id='submit'>회원가입</button>
+                <p id='error' style={{color:'red'}}></p>
+                <p id='succes' style={{color: 'green'}}></p>
             </form>
         </div>
     );
