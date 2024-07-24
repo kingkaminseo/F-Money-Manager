@@ -3,7 +3,7 @@ import './home.css';
 import Navber from './components/navbar';
 
 function Home() {
-  function check () {
+  function check() {
   if (localStorage.getItem('userName') == null) {
     alert("값이 비었습니다")
   }  else {
@@ -27,11 +27,10 @@ function Home() {
                     <p>모든 거래 내역을 확인하세요.</p>
                 </div>
                 <div className="card loan-management">
-                    <h2>대출/상환 관리</h2>123
+                    <h2>대출/상환 관리</h2>
                     <p>대출 및 상환 내역을 관리하세요.</p>
                 </div>
-                <button onClick={window.localStorage.clear()}>값삭제하기</button>
-                <button onClick={check()}>로그인 확인하기</button>
+                <button onClick={check}>로그인 확인하기</button>
             </div>
         </div>
     );
