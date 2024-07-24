@@ -3,6 +3,7 @@ import './Login.css';
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.0/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.12.0/firebase-auth.js";
 import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.12.0/firebase-firestore.js";
+import Navber from '../navbar';
 
 function Login() {
     const firebaseConfig = {
@@ -58,9 +59,8 @@ function Login() {
     }, [auth, db]);
 
     return (
+        <>        <Navber />
         <div className="container">
-            <h1 className='signHeader'>F-Money manager</h1>
-            
             <div className="form-container">
                 <h2>Login</h2>
                 <form id='login-form'>
@@ -74,6 +74,8 @@ function Login() {
                 </form>
             </div>
         </div>
+        </>
+
     );
 }
 

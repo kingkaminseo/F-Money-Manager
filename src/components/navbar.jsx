@@ -1,13 +1,13 @@
-
-
 function Navber() {
 
     return (
-        <div style={{width: '100%', backgroundColor: '#8eabc7', position: 'fixed', top: '0'}}>
-            <h2>F-Money Manager</h2>
-            <p id="name">{localStorage.getItem('userName')}</p>
-        </div>
+        <div className="header">
+        <h1>F-Money Manager</h1>
+        <p>친구들과의 돈 관리를 간편하게</p>
+    </div>
     );
 }
 
 export default Navber;
+
+
