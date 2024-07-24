@@ -27,7 +27,7 @@ function Home() {
                     <p>모든 거래 내역을 확인하세요.</p>
                 </div>
                 <div className="card loan-management">
-                    <h2>대출/상환 관리</h2>
+                    <h2>대출/상환 관리</h2>123
                     <p>대출 및 상환 내역을 관리하세요.</p>
                 </div>
                 <button onClick={window.localStorage.clear()}>값삭제하기</button>
