@@ -55,3 +55,54 @@
         grid-template-columns: 1fr;
     }
 }
+
+/* Modal styles */
+.ReactModal__Overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .ReactModal__Content {
+    position: relative;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    outline: none;
+    width: 80%;
+    max-width: 500px;
+  }
+  
+  .modal-header {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .modal-body {
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+  
+  .modal-footer {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .close-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .close-button:hover {
+    background-color: #0056b3;
+  }
