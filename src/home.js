@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './home.css';
 import Navber from './components/navbar';
 import Modal from 'react-modal';
@@ -8,14 +8,47 @@ Modal.setAppElement('#root'); // 모달이 열릴 때 앱의 메인 요소를 �
 
 function Home() {
   const [open, setOpen] = useState(false);
+  const [dates, setDates] = useState([]);
 
-  function check() {
+  useEffect(() => {
+    const generateCalendar = () => {
+      const currentDate = new Date();
+      const currentYear = currentDate.getFullYear();
+      const currentMonth = currentDate.getMonth();
+      
+      const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay();
+      const lastDateOfMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+      
+      const calendarDates = [];
+      let date = 1;
+      
+      for (let i = 0; i < 6; i++) {
+        const week = [];
+        for (let j = 0; j < 7; j++) {
+          if (i === 0 && j < firstDayOfMonth) {
+            week.push('');
+          } else if (date > lastDateOfMonth) {
+            week.push('');
+          } else {
+            week.push(date);
+            date++;
+          }
+        }
+        calendarDates.push(week);
+      }
+      
+      setDates(calendarDates);
+    };
+    
+    generateCalendar();
+  }, []);
+
     if (localStorage.getItem('userName') == null) {
       alert("세션이 만료되었습니다. 재로그인이 필요합니다");
+      window.location.href = './sign';
     } else {
-      alert("일단 알았습니다.");
     }
-  }
+  
 
   function toggleModal() {
     setOpen(prevOpen => !prevOpen);
@@ -27,7 +60,33 @@ function Home() {
       <div className="content">
         <div className="card calendar">
           <h2>달력</h2>
-          <p>여기에 달력 컴포넌트를 추가하세요.</p>
+          <p>{new Date().toLocaleString('ko-KR', { year: 'numeric', month: 'long' })}</p>
+          <table className="calendar-table" style={{ width:'90%', textAlign:'center', marginLeft: '5%'}}>
+            <thead>
+              <tr style={{border: '1px solid black'}}>
+                <th>일</th>
+                <th>월</th>
+                <th>화</th>
+                <th>수</th>
+                <th>목</th>
+                <th>금</th>
+                <th>토</th>
+              </tr>
+            </thead>
+            <tbody>
+              {dates.map((week, weekIndex) => (
+                <tr key={weekIndex}>
+                  {week.map((date, dateIndex) => (
+                    <td key={dateIndex} className={date ? "day" : "empty"}>
+                        <a onClick={toggleModal}>
+                      {date}
+                      </a>
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
         <div className="card friends-list">
           <h2>친구 목록</h2>
@@ -41,14 +100,14 @@ function Home() {
           <h2>대출/상환 관리</h2>
           <p>대출 및 상환 내역을 관리하세요.</p>
         </div>
-        <button onClick={check}>로그인 확인하기</button>
+        <button>로그인 확인하기</button>
       </div>
       <button onClick={toggleModal}>모달 창 띄우기</button>
       <Modal
         isOpen={open}
-        onRequestClose={toggleModal}
         className="ReactModal__Content"
-        overlayClassName="ReactModal__Overlay"  
+        overlayClassName="ReactModal__Overlay"
+        onRequestClose={toggleModal}
       >
         <div className="modal-header">
           모달입니다.
