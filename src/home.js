@@ -58,7 +58,7 @@ function Home() {
     <div className="home-container">
       <Navber />
       <div className="content">
-        <div className="card calendar">
+        <div className="card calendar" style={{textAlign: 'center'}}>
           <h2>달력</h2>
           <p>{new Date().toLocaleString('ko-KR', { year: 'numeric', month: 'long' })}</p>
           <table className="calendar-table" style={{ width:'90%', textAlign:'center', marginLeft: '5%'}}>
