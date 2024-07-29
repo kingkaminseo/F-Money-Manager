@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import '../components/sign/Login.css';
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-auth.js";
 import { getFirestore, doc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js";
@@ -56,10 +55,11 @@ function Add() {
     const handleAddInfo = async (e) => {
         e.preventDefault();
         console.log(how)
-        if (sendName && postName && money && how && payback && rull && details == "" ) {
-          console.log("빈값이 있습니다")
+        if (!sendName || !postName || !money || !how || !payback || !rull || !details) {
+          console.log("빈값이 있습니다");
+          setError("비어있는 정보가 있습니다.");
           return;
-        } else {
+      } else {
           console.log("들어감")
         }
         if (!auth.currentUser) {
@@ -182,9 +182,10 @@ function Add() {
                         className="sginInput"
                         style={{resize: 'vertical'}}
                     ></textarea>
-
+                    
+                    {error && <p className='error-message' style={{color : 'red'}}>{error}</p>}
                     <button type="submit">정보 추가</button>
-                    {error && <p className='error-message'>{error}</p>}
+             
                     {success && <p className='success-message'>{success}</p>}
                 </form>
             </div>
