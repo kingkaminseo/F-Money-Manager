@@ -26,8 +26,8 @@ function Navber() {
             <h1>F-Money Manager</h1>
             <p>친구들과의 돈 관리를 간편하게
                 <div style={{position:'fixed', right: '100px',top: '60px', cursor: 'pointer', backgroundColor : 'white',
-                boxShadow: '0px 5px 10px 2px #d7d7d7', padding: '10px', borderRadius : '15px'}}>
-                    <i style={{textAlign: 'right'}}><a onClick={oopen}>{localStorage.getItem('userName')+`님`}▿</a></i>
+                boxShadow: '0px 5px 10px 0.1px #e0e0e0', padding: '10px', borderRadius : '15px'}}>
+                    <i style={{textAlign: 'right'}}><a href="#" onClick={oopen}>{localStorage.getItem('userName')+`님`} ▿</a></i>
                    
                     <div style={{display : close, borderRadius: '10px', cursor: 'pointer', marginTop: '10px'}}>
                         <a href="#" onClick={toggleModal} style={{color :'black', textDecoration : 'none'}}>

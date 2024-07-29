@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../components/sign/Login.css';
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-auth.js";
-import { getFirestore, doc, updateDoc } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js";
+import { getFirestore, doc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js";
 import Navber from './navbar';
 
 function Add() {
@@ -20,31 +20,81 @@ function Add() {
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    const [description, setDescription] = useState('');
-    const [number, setNumber] = useState('');
+    const [sendName, setSendName] = useState('');
+    const [postName, setPostName] = useState('');
+    const [money, setMoney] = useState('');
+    const [how, setHow] = useState('');
+    const [payback, setPayback] = useState('');
+    const [rull, setRull] = useState('');
+    const [details, setDetails] = useState('');
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+    const [entries, setEntries] = useState([]);
+
+
+
+    useEffect(() => {
+        const fetchData = async () => {
+            if (!auth.currentUser) return;
+
+            try {
+                const userId = auth.currentUser.uid;
+                const userDocRef = doc(db, "users", userId);
+                const userDoc = await getDoc(userDocRef);
+                if (userDoc.exists()) {
+                    const userData = userDoc.data();
+                    setEntries(userData.entries || []);
+                }
+            } catch (error) {
+                console.error("정보를 가져오는 데 실패했습니다.", error);
+            }
+        };
+
+        fetchData();
+    }, [auth.currentUser, db]);
 
     const handleAddInfo = async (e) => {
         e.preventDefault();
-
+        console.log(how)
+        if (sendName && postName && money && how && payback && rull && details == "" ) {
+          console.log("빈값이 있습니다")
+          return;
+        } else {
+          console.log("들어감")
+        }
         if (!auth.currentUser) {
             console.error("사용자가 로그인하지 않았습니다.");
             setError("사용자가 로그인하지 않았습니다.");
             return;
         }
 
+        const newEntry = {
+            sendName,
+            postName,
+            money,
+            how,
+            payback,
+            rull,
+            details
+        };
+
+        const updatedEntries = [...entries, newEntry];
+
         try {
             const userId = auth.currentUser.uid;
             const userDocRef = doc(db, "users", userId);
-            await updateDoc(userDocRef, {
-                description: description,
-                number: number
-            });
+            await updateDoc(userDocRef, { entries: updatedEntries });
 
-            console.log("정보가 성공적으로 업데이트되었습니다.");
+            setEntries(updatedEntries);
             setSuccess('정보가 성공적으로 업데이트되었습니다!');
             setError('');
+            setSendName('');
+            setPostName('');
+            setMoney('');
+            setHow('');
+            setPayback('');
+            setRull('');
+            setDetails('');
         } catch (error) {
             console.error("정보 업데이트 실패", error);
             setError("정보 업데이트 실패.");
@@ -58,67 +108,79 @@ function Add() {
             <div className="container">
                 <form onSubmit={handleAddInfo}>
                     <h1>서약서</h1>
-                    <label htmlFor="description">대출자 성함</label>
+                    <label htmlFor="sendName">대출자 성함</label>
                     <input
                         type="text"
                         placeholder='성함'
-                        id='description'
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
+                        id='sendName'
+                        value={sendName}
+                        onChange={(e) => setSendName(e.target.value)}
                         className="sginInput"
                     />
 
-                    <label htmlFor='provider-name'>대출 제공자 성함</label>
+                    <label htmlFor='postName'>대출 제공자 성함</label>
                     <input
                         type="text"
-                        id="provider-name"
-                        value={number}
-                        onChange={(e) => setNumber(e.target.value)}
+                        placeholder='성함'
+                        id="postName"
+                        value={postName}
+                        onChange={(e) => setPostName(e.target.value)}
                         className="sginInput"
                     />
 
-                    <label htmlFor='amount'>대출금</label>
+                    <label htmlFor='money'>대출금</label>
                     <input
                         type="number"
-                        id="amount"
-                        value={number}
-                        onChange={(e) => setNumber(e.target.value)}
+                        id="money"
+                        value={money}
+                        onChange={(e) => setMoney(e.target.value)}
                         className="sginInput"
                     />
 
-                    <label htmlFor='purchase'>무엇을 샀습니까?</label>
-                    <input
-                        type="text"
-                        id="purchase"
-                        value={number}
-                        onChange={(e) => setNumber(e.target.value)}
-                        className="sginInput"
-                    />
+                    <label htmlFor="how">어디에 소비할 것인가요?</label>
+                    <select
+                        id='how'
+                        value={how}
+                        onChange={(e) => setHow(e.target.value)}
+                        className='sginInput'
+                    >
+                        <option value="" disabled>--선택해주세요--</option>
+                        <option value="취미・여가">취미・여가</option>
+                        <option value="이체">이체</option>
+                        <option value="식비">식비</option>
+                        <option value="카페・간식">카페・간식</option>
+                        <option value="편의점・마트・잡화">편의점・마트・잡화</option>
+                        <option value="쇼핑">쇼핑</option>
+                        <option value="의료・건강・피트니스">의료・건강・피트니스</option>
+                        <option value="교통・자동차">교통・자동차</option>
+                        <option value="보험・세금・기타금융">보험・세금・기타금융</option>
+                    </select>
 
-                    <label htmlFor='repayment'>언제 갚을 것입니까?</label>
+                    <label htmlFor='payback'>언제 갚을 것입니까?</label>
                     <input
                         type="date"
-                        id="repayment"
-                        value={number}
-                        onChange={(e) => setNumber(e.target.value)}
+                        id="payback"
+                        value={payback}
+                        onChange={(e) => setPayback(e.target.value)}
                         className="sginInput"
                     />
 
-                    <label htmlFor='default-condition'>안 갚을 시 조건</label>
+                    <label htmlFor='rull'>안 갚을 시 조건</label>
                     <input
                         type="text"
-                        id="default-condition"
-                        value={number}
-                        onChange={(e) => setNumber(e.target.value)}
+                        id="rull"
+                        value={rull}
+                        onChange={(e) => setRull(e.target.value)}
                         className="sginInput"
                     />
 
                     <label htmlFor='details'>기타 상세 정보</label>
                     <textarea
                         id="details"
-                        value={number}
-                        onChange={(e) => setNumber(e.target.value)}
+                        value={details}
+                        onChange={(e) => setDetails(e.target.value)}
                         className="sginInput"
+                        style={{resize: 'vertical'}}
                     ></textarea>
 
                     <button type="submit">정보 추가</button>
