@@ -4,6 +4,7 @@ import About from './About';
 import Home from './home';
 import Login from './components/sign/Login';
 import Sign from './components/sign/signin';
+import Add from './components/add';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path='/Sign' element={<Sign />} />
         <Route path='/' element={<Login />} />
         <Route path='/*' element={<About />} />
+        <Route path='/Add' element={<Add />} />
       </Routes>
     </Router>
   );

@@ -4,33 +4,37 @@ import Modal from 'react-modal';
 function Navber() {
 
 
-    const [open, setOpen] = useState("none");
+    const [close, setClose] = useState("none");
+    const [open, setOpen] = useState(false);
     
 
     function oopen() {
-        setOpen(open === "none" ? "block" : "none");
+        setClose(close === "none" ? "block" : "none");
     }
 
     function toggleModal() {
         setOpen(prevOpen => !prevOpen);
       }
     
+    function logOut() {
+        localStorage.clear()
+        window.location.href = './sign'
+    }
 
     return (
         <div className="header">
             <h1>F-Money Manager</h1>
             <p>친구들과의 돈 관리를 간편하게
-                <div style={{position:'fixed', right: '100px',top: '60px'}}>
+                <div style={{position:'fixed', right: '100px',top: '60px', cursor: 'pointer'}}>
                     <i style={{textAlign: 'right', }}><a onClick={oopen}>{localStorage.getItem('userName')+`님`}▿</a></i>
-                    <div style={{display : open, border: '1px solid black', }}>
-                        <a href="#" onClick={toggleModal}>
+                    <div style={{display : close, border: '1px solid black', borderRadius: '10px', cursor: 'pointer'}}>
+                        <a href="#" onClick={toggleModal} style={{color :'black', textDecoration : 'none'}}>
                         로그아웃
                         </a>
                     </div>
 
                 </div>
             </p>
-            <button onClick={toggleModal}>모달 창 띄우기</button>
       <Modal
         isOpen={open}
         className="ReactModal__Content"
@@ -38,13 +42,14 @@ function Navber() {
         onRequestClose={toggleModal}
       >
         <div className="modal-header">
-          모달입니다.
+          로그아웃
         </div>
         <div className="modal-body">
-          <p>여기에 모달 내용을 추가하세요.</p>
+          <p>로그아웃을 진행하시겠습니까?</p>
         </div>
         <div className="modal-footer">
-          <button className="close-button" onClick={toggleModal}>닫기</button>
+            <button className="close-button"onClick={logOut}>확인</button>
+          <button className="open-button" onClick={toggleModal}>닫기</button>
         </div>
       </Modal>
         </div>
