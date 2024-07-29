@@ -58,9 +58,12 @@ function Add() {
         if (!sendName || !postName || !money || !how || !payback || !rull || !details) {
           console.log("빈값이 있습니다");
           setError("비어있는 정보가 있습니다.");
+          document.getElementById('containter').style.border = "2px solid red"
           return;
       } else {
           console.log("들어감")
+          
+          setError("");
         }
         if (!auth.currentUser) {
             console.error("사용자가 로그인하지 않았습니다.");
@@ -95,8 +98,14 @@ function Add() {
             setPayback('');
             setRull('');
             setDetails('');
+            document.getElementById('containter').style.border = "2px solid green";
+            setTimeout(() => {
+              window.location.href = './'
+            }, 1000);
+            
         } catch (error) {
             console.error("정보 업데이트 실패", error);
+            document.getElementById('containter').style.border = "2px solid red"
             setError("정보 업데이트 실패.");
             setSuccess('');
         }
@@ -105,7 +114,7 @@ function Add() {
     return (
         <>
             <Navber />
-            <div className="container">
+            <div className="container" id='containter' style={{marginBottom: '100px'}}>
                 <form onSubmit={handleAddInfo}>
                     <h1>서약서</h1>
                     <label htmlFor="sendName">대출자 성함</label>
@@ -182,9 +191,9 @@ function Add() {
                         className="sginInput"
                         style={{resize: 'vertical'}}
                     ></textarea>
-                    
+
                     {error && <p className='error-message' style={{color : 'red'}}>{error}</p>}
-                    <button type="submit">정보 추가</button>
+                    <button type="submit">서약서 작성</button>
              
                     {success && <p className='success-message'>{success}</p>}
                 </form>
