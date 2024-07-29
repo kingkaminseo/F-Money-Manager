@@ -42,7 +42,7 @@ function Login() {
                 document.getElementById('error').innerText = "";
                 const inputs = document.getElementsByClassName('sginInput');
                 for (let i = 0; i < inputs.length; i++) {
-                    inputs[i].style.border = 'none'; // 원하는 스타일 속성 설정
+                    inputs[i].style.border = 'none'; 
                 }
                 setTimeout(() => {
                     window.location.href = './Sign'
@@ -54,7 +54,7 @@ function Login() {
                     document.getElementById('error').innerText = "이미 사용중인 아이디 입니다.";
                     const inputs = document.getElementsByClassName('sginInput');
                     for (let i = 0; i < inputs.length; i++) {
-                        inputs[i].style.border = '1px solid red'; // 원하는 스타일 속성 설정
+                        inputs[i].style.border = '1px solid red'; 
                     }
 
                 } else {

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import '../components/sign/Login.css'
+import React, { useState } from 'react';
+import '../components/sign/Login.css';
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-auth.js";
 import { getFirestore, doc, updateDoc } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js";
@@ -21,7 +21,7 @@ function Add() {
     const db = getFirestore(app);
 
     const [description, setDescription] = useState('');
-    const [number, setNumber] = useState(0);
+    const [number, setNumber] = useState('');
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
 
@@ -35,8 +35,8 @@ function Add() {
         }
 
         try {
-            const userId = auth.currentUser.uid;  // 현재 로그인한 사용자의 ID를 가져옵니다
-            const userDocRef = doc(db, "users", userId);  // 현재 사용자의 문서 참조를 가져옵니다
+            const userId = auth.currentUser.uid;
+            const userDocRef = doc(db, "users", userId);
             await updateDoc(userDocRef, {
                 description: description,
                 number: number
@@ -54,20 +54,78 @@ function Add() {
 
     return (
         <>
-        <Navber />
-        <div className="container">
-            <form onSubmit={handleAddInfo}>
-                <h1>추가 정보 입력</h1>
-                <label htmlFor="description">설명</label>
-                <input type="text" placeholder='설명' id='description' value={description} onChange={(e) => setDescription(e.target.value)}/>
+            <Navber />
+            <div className="container">
+                <form onSubmit={handleAddInfo}>
+                    <h1>서약서</h1>
+                    <label htmlFor="description">대출자 성함</label>
+                    <input
+                        type="text"
+                        placeholder='성함'
+                        id='description'
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                        className="sginInput"
+                    />
 
-                <label htmlFor='number'>가격정보같은거라도 입력</label>
-                <input type="number" id="number" value={number} onChange={(e) => setNumber(e.target.value)}/>
-                <button type="submit">정보 추가</button>
-                <p id='error' style={{color:'red'}}>{error}</p>
-                <p id='success' style={{color: 'green'}}>{success}</p>
-            </form>
-        </div>
+                    <label htmlFor='provider-name'>대출 제공자 성함</label>
+                    <input
+                        type="text"
+                        id="provider-name"
+                        value={number}
+                        onChange={(e) => setNumber(e.target.value)}
+                        className="sginInput"
+                    />
+
+                    <label htmlFor='amount'>대출금</label>
+                    <input
+                        type="number"
+                        id="amount"
+                        value={number}
+                        onChange={(e) => setNumber(e.target.value)}
+                        className="sginInput"
+                    />
+
+                    <label htmlFor='purchase'>무엇을 샀습니까?</label>
+                    <input
+                        type="text"
+                        id="purchase"
+                        value={number}
+                        onChange={(e) => setNumber(e.target.value)}
+                        className="sginInput"
+                    />
+
+                    <label htmlFor='repayment'>언제 갚을 것입니까?</label>
+                    <input
+                        type="date"
+                        id="repayment"
+                        value={number}
+                        onChange={(e) => setNumber(e.target.value)}
+                        className="sginInput"
+                    />
+
+                    <label htmlFor='default-condition'>안 갚을 시 조건</label>
+                    <input
+                        type="text"
+                        id="default-condition"
+                        value={number}
+                        onChange={(e) => setNumber(e.target.value)}
+                        className="sginInput"
+                    />
+
+                    <label htmlFor='details'>기타 상세 정보</label>
+                    <textarea
+                        id="details"
+                        value={number}
+                        onChange={(e) => setNumber(e.target.value)}
+                        className="sginInput"
+                    ></textarea>
+
+                    <button type="submit">정보 추가</button>
+                    {error && <p className='error-message'>{error}</p>}
+                    {success && <p className='success-message'>{success}</p>}
+                </form>
+            </div>
         </>
     );
 }
