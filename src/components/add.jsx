@@ -99,9 +99,8 @@ function Add() {
             setRull('');
             setDetails('');
             document.getElementById('containter').style.border = "2px solid green";
-            setTimeout(() => {
-              window.location.href = './'
-            }, 1000);
+            window.location.href = './'
+           
             
         } catch (error) {
             console.error("정보 업데이트 실패", error);

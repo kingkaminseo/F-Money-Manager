@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './home.css';
 import Navber from './components/navbar';
 import Modal from 'react-modal';
+import Moneywrite from './components/write/moneyWirte';
 
 // React Modal 설정
 Modal.setAppElement('#root'); // 모달이 열릴 때 앱의 메인 요소를 설정
@@ -97,6 +98,7 @@ function Home() {
           <h2>거래 기록</h2>
           <h4 style={{fontWeight: 'normal', position: 'absolute', top: 0, right: '30px', cursor: 'pointer'}}><a href='/Add'>기록 추가 +</a></h4>
           <p>모든 거래 내역을 확인하세요.</p>
+          <Moneywrite />
         </div>
         <div className="card loan-management">
           <h2>대출/상환 관리</h2>

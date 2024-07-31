@@ -341,3 +341,32 @@ button:hover {
 error-message {
     color: red;
 }
+
+.entries-list {
+    list-style-type: none;
+}
+
+.entry-item {
+    border-top: 1.5px solid #9a9a9a;
+    /* border-radius: 15px; */
+    position: relative;
+    width: 100%;
+}
+
+.entry-item > h5 {
+    position: absolute;
+    top: -10px;
+    background-color: white;
+    text-align: center;
+    left: 50%;
+    width: 30px;
+}
+
+.entry-item > h5, h3, p {
+    margin: 0;
+    padding: 0;
+}
+
+.entry-item > p {
+    text-align: right;
+}
