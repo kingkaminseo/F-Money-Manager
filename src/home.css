@@ -344,6 +344,9 @@ error-message {
 
 .entries-list {
     list-style-type: none;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 .entry-item {
@@ -356,17 +359,38 @@ error-message {
 .entry-item > h5 {
     position: absolute;
     top: -10px;
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 15px;
     text-align: center;
     left: 50%;
     width: 30px;
 }
 
-.entry-item > h5, h3, p {
+.entry-item > h5, p {
     margin: 0;
     padding: 0;
+
 }
 
 .entry-item > p {
     text-align: right;
+    position: relative;
+    bottom: 10px;
+    right: 20px;
+}
+
+.entry-item > button {
+    background-color: rgba(255, 255, 255, 0) !important;
+    color: black;
+    float: right;
+    position: relative;
+    right: 10px;
+
+}
+
+.entry-item > h3 {
+    margin-block-start: 2em;
+    margin-block-end: 0em;
+    position: relative;
+    right: -30px;
 }
