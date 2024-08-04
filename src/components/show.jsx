@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-auth.js";
 import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js";
+import Navber from './navbar';
 
-function Moneywrite() {
+function Show() {
     const firebaseConfig = {
         apiKey: "AIzaSyDIIMXKdc0TSdBqSf1PlDsMAHC97Nbhxmw",
         authDomain: "f-money-8a633.firebaseapp.com",
@@ -18,18 +19,18 @@ function Moneywrite() {
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    const [entries, setEntries] = useState([]);
+    const [friends, setFriends] = useState([]);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetchEntries = async (user) => {
+        const fetchFriends = async (user) => {
             try {
                 const userDocRef = doc(db, "users", user.uid);
                 const userDoc = await getDoc(userDocRef);
                 if (userDoc.exists()) {
                     const userData = userDoc.data();
-                    setEntries(userData.entries || []);
+                    setFriends(userData.friend || []);
                 } else {
                     console.error("No such document!");
                 }
@@ -43,7 +44,7 @@ function Moneywrite() {
 
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
-                fetchEntries(user);
+                fetchFriends(user);
             } else {
                 setError("사용자가 로그인하지 않았습니다.");
                 setLoading(false);
@@ -57,32 +58,18 @@ function Moneywrite() {
         return <div>Loading...</div>;
     }
 
-    let userName = localStorage.getItem("userName")
-
-
-const days = entries.map(entry => {
-    const [year, month, day] = entry.payback.split('-');
-    return day; // 일(day)만 반환
-  });
-  
-  console.log(days); // ['01', '15', '28']
-  localStorage.setItem("days", days);
     return (
-            <div>
+        <>
                 {error && <p className="error-message">{error}</p>}
-                <ul className="entries-list">
-                    {entries.map((entry, index) => (
-                        <li key={index} className="entry-item" id='item' style={{ backgroundColor: entry.postName === userName ? "rgb(215,226,241)" : "rgb(254,242,245)" }}>
-                            <button>자세히 보기🔍</button>
-                            <h5>{index + 1}</h5>
-                            <h3>{entry.postName}→{entry.sendName}</h3>
-                            <p>대출금: {entry.money}₩</p>
-                            <p>기간: {entry.payback}</p>
+                <ul className="friends-list">
+                    {friends.map((friend, index) => (
+                        <li key={index} className="friend-item">
+                            {friend.friendname}
                         </li>
                     ))}
                 </ul>
-            </div>
+        </>
     );
 }
 
-export default Moneywrite;
+export default Show;

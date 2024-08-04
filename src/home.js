@@ -3,6 +3,8 @@ import './home.css';
 import Navber from './components/navbar';
 import Modal from 'react-modal';
 import Moneywrite from './components/write/moneyWirte';
+import AddFriend from './components/friend';
+import Show from './components/show';
 
 // React Modal 설정
 Modal.setAppElement('#root'); // 모달이 열릴 때 앱의 메인 요소를 설정
@@ -19,7 +21,6 @@ function Home() {
       
       const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay();
       const lastDateOfMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-      console.log(lastDateOfMonth)
       const calendarDates = [];
       let date = 1;
       
@@ -49,11 +50,16 @@ function Home() {
       window.location.href = './sign';
     } else {
     }
-  
+
 
   function toggleModal() {
     setOpen(prevOpen => !prevOpen);
   }
+
+  const storedDays = localStorage.getItem('days') || '';
+  const daysArray = storedDays.split(',').map(day => parseInt(day));
+  const currentDate = new Date();
+  let nowDate = currentDate.getDate()
 
   return (
     <div className="home-container">
@@ -79,7 +85,7 @@ function Home() {
                 <tr key={weekIndex}>
                   {week.map((date, dateIndex) => (
                     <td key={dateIndex} className={date ? "day" : "empty"}>
-                        <a onClick={toggleModal}>
+                        <a onClick={toggleModal} style={{border: daysArray.includes(date) ? "2px solid red" : "none", borderRadius: '50%', textDecoration: nowDate == date ? '#007bff wavy underline' : 'none', padding: '3px'}}>
                       {date}
                       </a>
                     </td>
@@ -91,8 +97,9 @@ function Home() {
         </div>
         <div className="card friends-list" style={{position: 'relative'}}>
           <h2>친구 목록</h2>
-          <h4 style={{fontWeight: 'normal', position: 'absolute', top: 0, right: '30px', cursor: 'pointer'}}><a href='/about'>친구 추가 +</a></h4>
+          <h4 style={{fontWeight: 'normal', position: 'absolute', top: 0, right: '30px', cursor: 'pointer'}}><a href='#' onClick={toggleModal}>친구 추가 +</a></h4>
           <p>현재 나의 친구</p>
+          <Show />
         </div>
         <div className="card transaction-history" style={{position :'relative'}}>
           <h2>거래 기록</h2>
@@ -105,52 +112,23 @@ function Home() {
           <p>대출 및 상환 내역을 관리하세요.</p>
         </div>
       </div>
-      <button onClick={toggleModal}>모달 창 띄우기</button>
       <Modal
-        isOpen={open}
-        className="ReactModal__Content"
-        overlayClassName="ReactModal__Overlay"
-        onRequestClose={toggleModal}
-      >
-        <div className="modal-header">
-          모달입니다.
-        </div>
-        <div className="modal-body">
-        <div className="card calendar" style={{textAlign: 'center'}}>
-          <h2>달력</h2>
-          <p>{new Date().toLocaleString('ko-KR', { year: 'numeric', month: 'long' })}</p>
-          <table className="calendar-table" style={{ width:'90%', textAlign:'center', marginLeft: '5%'}}>
-            <thead>
-              <tr style={{border: '1px solid black'}}>
-                <th>일</th>
-                <th>월</th>
-                <th>화</th>
-                <th>수</th>
-                <th>목</th>
-                <th>금</th>
-                <th>토</th>
-              </tr>
-            </thead>
-            <tbody>
-              {dates.map((week, weekIndex) => (
-                <tr key={weekIndex}>
-                  {week.map((date, dateIndex) => (
-                    <td key={dateIndex} className={date ? "day" : "empty"}>
-                        <a onClick={toggleModal}>
-                      {date}
-                      </a>
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        </div>
-        <div className="modal-footer">
-          <button className="close-button" onClick={toggleModal}>닫기</button>
-        </div>
-      </Modal>
+                isOpen={open}
+                className="ReactModal__Content"
+                overlayClassName="ReactModal__Overlay"
+                onRequestClose={toggleModal}>
+                <div className="modal-header">
+                    친구추가
+                </div>
+                <div className="modal-body">
+                    <AddFriend />
+                </div>
+                <div className="modal-footer">
+                    <button className="open-button" onClick={toggleModal}>닫기</button>
+                </div>
+        </Modal>
+
+
     </div>
   );
 }

@@ -394,3 +394,7 @@ error-message {
     position: relative;
     right: -30px;
 }
+
+.empty {
+    display: none;
+}

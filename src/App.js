@@ -5,6 +5,7 @@ import Home from './home';
 import Login from './components/sign/Login';
 import Sign from './components/sign/signin';
 import Add from './components/add';
+import AddFriend from './components/friend';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path='/' element={<Login />} />
         <Route path='/*' element={<About />} />
         <Route path='/Add' element={<Add />} />
+        <Route path='/AddFriend' element={<AddFriend />} />
       </Routes>
     </Router>
   );

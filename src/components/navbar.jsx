@@ -8,7 +8,8 @@ function Navber() {
     const [open, setOpen] = useState(false);
     const [home, setHome] = useState(false);
 
-    function oopen() {
+    function oopen(e) {
+        e.preventDefault();
         setClose(close === "none" ? "block" : "none");
     }
 
@@ -31,7 +32,7 @@ function Navber() {
             <p>친구들과의 돈 관리를 간편하게
                 <div style={{position: 'fixed', right: '100px', top: '60px', cursor: 'pointer', backgroundColor: 'white', marginBottom: '10px',
                     boxShadow: '0px 5px 10px 0.1px #e0e0e0', padding: '10px', borderRadius: '15px', zIndex: '99'}}>
-                    <i style={{textAlign: 'right'}}><a href="#" onClick={oopen}>{localStorage.getItem('userName') + `님`} ▿</a></i>
+                    <i style={{textAlign: 'right'}}><a href="#" onClick={oopen} >{localStorage.getItem('userName') + `님`} ▿</a></i>
                     <div style={{display: close, borderRadius: '10px', cursor: 'pointer', marginTop: '10px'}}>
                         <div style={{border: '0.5px solid black', marginBottom: '10px'}}></div>
                         <a href="#" onClick={homeModal} style={{color: 'black', textDecoration: 'none', color: '#3f3f3f', fontSize: '18px'}}>
