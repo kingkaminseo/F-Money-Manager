@@ -59,16 +59,20 @@ function Show() {
     }
 
     return (
-        <>
+        <div style={{overflow: 'scroll', height : '160px'}}>
+
+        <div style={{zIndex: '0', backgroundColor: '#ffffff', margin: '0', padding: '0', boxShadow: 'inset 0px 0px 6px 1px rgb(215, 206, 206)'}}>
                 {error && <p className="error-message">{error}</p>}
-                <ul className="friends-list">
+                <ul className="friends-list" style={{margin: '0', padding: '0'}}>
                     {friends.map((friend, index) => (
-                        <li key={index} className="friend-item">
+                        <li key={index} className="friend-item" style={{padding : '15px', borderTop: index == 0 ? 'none' : '1px dashed #d6cfcf'}}>
                             {friend.friendname}
                         </li>
+                        
                     ))}
                 </ul>
-        </>
+        </div>
+        </div>
     );
 }
 

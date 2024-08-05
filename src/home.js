@@ -97,8 +97,9 @@ function Home() {
         </div>
         <div className="card friends-list" style={{position: 'relative'}}>
           <h2>친구 목록</h2>
-          <h4 style={{fontWeight: 'normal', position: 'absolute', top: 0, right: '30px', cursor: 'pointer'}}><a href='#' onClick={toggleModal}>친구 추가 +</a></h4>
           <p>현재 나의 친구</p>
+          <h4 style={{fontWeight: 'normal', position: 'absolute', top: 0, right: '30px', cursor: 'pointer'}}><a href='#' onClick={toggleModal}>친구 추가 +</a></h4>
+
           <Show />
         </div>
         <div className="card transaction-history" style={{position :'relative'}}>
