@@ -1,7 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-auth.js";
 import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js";
+import Modal from 'react-modal';
+
+// Set app element for the modal
+Modal.setAppElement('#root');
 
 function Moneywrite() {
     const firebaseConfig = {
@@ -21,6 +25,11 @@ function Moneywrite() {
     const [entries, setEntries] = useState([]);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(true);
+    const [modalOpen, setModalOpen] = useState(false);
+    const [selectedEntry, setSelectedEntry] = useState(null);
+
+    const checkboxRef1 = useRef(null);
+    const checkboxRef2 = useRef(null);
 
     useEffect(() => {
         const fetchEntries = async (user) => {
@@ -57,31 +66,77 @@ function Moneywrite() {
         return <div>Loading...</div>;
     }
 
-    let userName = localStorage.getItem("userName")
+    const userName = localStorage.getItem("userName");
 
+    const days = entries.map(entry => {
+        const [year, month, day] = entry.payback.split('-');
+        return day; // 일(day)만 반환
+    });
 
-const days = entries.map(entry => {
-    const [year, month, day] = entry.payback.split('-');
-    return day; // 일(day)만 반환
-  });
-  
-  console.log(days); // ['01', '15', '28']
-  localStorage.setItem("days", days);
+    console.log(days);
+    localStorage.setItem("days", days);
+
+    const openModal = (entry) => {
+        setSelectedEntry(entry);
+        setModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setModalOpen(false);
+        setSelectedEntry(null);
+    };
+
     return (
-            <div>
-                {error && <p className="error-message">{error}</p>}
-                <ul className="entries-list">
-                    {entries.map((entry, index) => (
-                        <li key={index} className="entry-item" id='item' style={{ backgroundColor: entry.postName === userName ? "rgb(215,226,241)" : "rgb(254,242,245)" }}>
-                            <button>자세히 보기🔍</button>
-                            <h5>{index + 1}</h5>
-                            <h3>{entry.postName}→{entry.sendName}</h3>
-                            <p>대출금: {entry.money}₩</p>
-                            <p>기간: {entry.payback}</p>
-                        </li>
-                    ))}
-                </ul>
-            </div>
+        <div>
+            {error && <p className="error-message">{error}</p>}
+            <ul className="entries-list">
+                {entries.map((entry, index) => (
+                    <li key={index} className="entry-item" style={{ backgroundColor: entry.postName === userName ? "rgb(215,226,241)" : "rgb(254,242,245)" }}>
+                        <button onClick={() => openModal(entry)}>자세히 보기🔍</button>
+                        <h5>{index + 1}</h5>
+                        <h3>{entry.postName} → {entry.sendName}</h3>
+                        <p>대출금: {entry.money}₩</p>
+                        <p>기간: {entry.payback}</p>
+                    </li>
+                ))}
+            </ul>
+
+            {/* Modal for entry details */}
+            <Modal
+                isOpen={modalOpen}
+                className="ReactModal__Content"
+                overlayClassName="ReactModal__Overlay"
+                onRequestClose={closeModal}
+
+            >
+                <div className="modal-header">
+                    자세히 보기
+                </div>
+                <div className="modal-body">
+                    {selectedEntry && (
+                        <>
+                            <h3>{selectedEntry.postName} → {selectedEntry.sendName}</h3>
+                            <ul>
+                                <li>대출금: {selectedEntry.money}₩</li>
+                                <li>기간: {selectedEntry.payback}</li>
+                                <li>소비 종류: {selectedEntry.how}</li>
+                                <li>규칙: {selectedEntry.rull}</li>
+                                <li>상세 설명: {selectedEntry.details}</li>
+                            </ul>
+                        </>
+                        
+                    )}
+                    <div style={{borderBottom : '1px solid black'}}></div>
+                    <label>돈을 갚으셨습니까?</label>
+                    <input type="checkbox" ref={checkboxRef1} onChange={() => console.log(checkboxRef1.current.checked)} /> <br />
+                    <label>해당 기록을 삭제 하시겠습니까?</label>
+                    <input type="checkbox" ref={checkboxRef2} />
+                </div>
+                <div className="modal-footer">
+                    <button className="close-button" onClick={() => window.location.href = './'}>확인</button>
+                </div>
+            </Modal>
+        </div>
     );
 }
 
