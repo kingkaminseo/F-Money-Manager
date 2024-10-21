@@ -73,6 +73,7 @@ function Login() {
                     <p id='login-succes' style={{color:'green'}}></p>
                 </form>
             </div>
+            <a href='/login'>회원이 아니신가요? 회원가입</a>
         </div>
         </>
 

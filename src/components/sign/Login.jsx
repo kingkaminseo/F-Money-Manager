@@ -87,6 +87,7 @@ function Login() {
                 <p id='error' style={{color:'red'}}></p>
                 <p id='succes' style={{color: 'green'}}></p>
             </form>
+            <a href='/Sign'>이미 회원이신가요? 로그인</a>
         </div>
         </>
 
