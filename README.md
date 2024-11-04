@@ -1,70 +1,53 @@
-# Getting Started with Create React App
+# F-Money Manager
+![Alt text](image.png)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### 프로젝트 소개
+---
+- 플랫폼: Web / 웹
+- 제작인원: 1 인
+- 제작 기간: 14 일 (2024.07.22 ~ 2024.08.06)
+- 사용 기술: React, FireBase
 
-## Available Scripts
+'F-Money Manager'는 친구들과 함께 돈 관리를 더욱 간편하게 해주는 웹 애플리케이션입니다. 기존의 불편했던 금전 관리 방식을 개선하고, 기록을 통해 필요한 정보를 쉽게 확인할 수 있도록 돕습니다. 언제 어디서든 접근이 용이하며, 사용자는 손쉽게 지출 내역과 수입을 기록하고, 다양한 분석 정보를 통해 현금 흐름을 파악할 수 있습니다.
 
-In the project directory, you can run:
+### 미리보기
+--- 
+![Alt text](image-1.png)
+메인 페이지
+![Alt text](image-2.png)
+기록 추가 페이지
+![Alt text](image-3.png)
+친구추가 모달창
+![Alt text](image-4.png)
+홈버튼 모달창
+![Alt text](image-5.png)
+로그아웃 모달창
+![Alt text](image-6.png)
+로그인 페이지
+![Alt text](image-7.png)
+회원가입 페이지
 
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### 구현기능
+---
+- 회원가입
+- 로그인
+- 메인페이지
+    - 달력
+        - 결제일 기록
+    - 기록 보기 (채권자, 채무자, 기간, 원금)
+        - 기록상세 보기
+        - 지출유형별로 색깔추가 (채무자가 회원이면 파란색, 채권자가 회원이면 빨간색)
+    - 거래기록 추가
+        - 대출자 성함
+        - 대출 제공자 성함
+        - 대출금
+        - 소비 목록 ( 취미, 이제, 식비, 쇼핑, 의료, 보험 등등 9가지 )
+        - 안 갚을 시 조건
+        - 기타 상세 정보
+    - 친구 추가
+- 메뉴바
+    - 홈 버튼 모달창
+    - 로그아웃 모달창
+- 친구
+    - 친구추가 모달창
+    - 친구 보기
